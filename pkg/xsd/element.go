@@ -206,6 +206,9 @@ func firstToLower(s string) string {
 	if strings.HasPrefix(s, "MP") && len(s) > 2 && s[2] >= 'A' && s[2] <= 'Z' {
 		return "mp" + s[2:]
 	}
+	if s == "UOM" || s == "DTF" || s == "DTT" || s == "MM" || s == "BQ" {
+		return strings.ToLower(s)
+	}
 	r := []rune(s)
 	r[0] = unicode.ToLower(r[0])
 	return string(r)
