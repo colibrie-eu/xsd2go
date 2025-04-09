@@ -4,6 +4,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+	"strings"
+	"unicode"
 
 	"github.com/iancoleman/strcase"
 )
@@ -113,6 +115,16 @@ func (e *Element) XmlName() string {
 	return name
 }
 
+func (e *Element) JsonName() string {
+	if e.XmlNameOverride != "" {
+		return firstToLower(e.XmlNameOverride)
+	}
+	if e.Name == "" {
+		return firstToLower(e.refElm.XmlName())
+	}
+	return firstToLower(e.Name)
+}
+
 func (e *Element) ContainsText() bool {
 	return e.typ != nil && e.typ.ContainsText()
 }
@@ -179,6 +191,24 @@ func (e *Element) prefixNamespace(name string) string {
 		name = ns + ":" + name
 	}
 	return name
+}
+
+func firstToLower(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	if strings.HasSuffix(s, "ID") {
+		s = s[:len(s)-2] + "Id"
+	}
+	if strings.HasPrefix(s, "EC") && len(s) > 2 && s[2] >= 'A' && s[2] <= 'Z' {
+		return "ec" + s[2:]
+	}
+	if strings.HasPrefix(s, "MP") && len(s) > 2 && s[2] >= 'A' && s[2] <= 'Z' {
+		return "mp" + s[2:]
+	}
+	r := []rune(s)
+	r[0] = unicode.ToLower(r[0])
+	return string(r)
 }
 
 func upperCaseID(name string) string {

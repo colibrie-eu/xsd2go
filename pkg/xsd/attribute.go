@@ -81,6 +81,10 @@ func (a *Attribute) XmlName() string {
 	return a.Name
 }
 
+func (a *Attribute) JsonName() string {
+	return firstToLower(a.XmlName())
+}
+
 func (a *Attribute) optional() bool {
 	return a.Use == "optional"
 }
