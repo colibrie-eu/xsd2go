@@ -2,6 +2,7 @@ package xsd
 
 import (
 	"encoding/xml"
+	"sort"
 )
 
 type Extension struct {
@@ -19,6 +20,9 @@ func (ext *Extension) Attributes() []Attribute {
 		attrs = append(attrs, ext.typ.Attributes()...)
 		attrs = deduplicateAttributes(attrs)
 	}
+	sort.Slice(attrs, func(i, j int) bool {
+		return attrs[i].Name < attrs[j].Name
+	})
 	for idx := range ext.AttributeGroups {
 		attrGroup := ext.AttributeGroups[idx]
 		attrs = append(attrs, attrGroup.Attributes()...)
