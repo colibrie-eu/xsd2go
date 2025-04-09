@@ -63,7 +63,7 @@ func (e *Element) GoMemLayout() string {
 	if e.isArray() {
 		return "[]"
 	}
-	if (e.MaxOccurs == "1" || e.MaxOccurs == "") && e.MinOccurs == "0" && e.GoTypeName() != "string" {
+	if (e.MaxOccurs == "1" || e.MaxOccurs == "") && e.MinOccurs == "0" {
 		return "*"
 	}
 	return ""
