@@ -48,6 +48,7 @@ func (e *Element) GoFieldName() string {
 	if e.FieldOverride {
 		name += "Elm"
 	}
+	name = upperCaseID(name)
 	return strcase.ToCamel(name)
 }
 
@@ -70,7 +71,9 @@ func (e *Element) GoMemLayout() string {
 
 func (e *Element) GoTypeName() string {
 	if e.Type != "" {
-		return e.typ.GoName()
+		name := e.typ.GoName()
+		name = upperCaseID(name)
+		return name
 	} else if e.Ref != "" {
 		return e.refElm.GoTypeName()
 	} else if e.isPlainString() {
@@ -164,4 +167,11 @@ func (e *Element) prefixNameWithParent(parentElement *Element) {
 	if parentElement != nil {
 		e.nameOverride = fmt.Sprintf("%s-%s", parentElement.GoName(), e.GoName())
 	}
+}
+
+func upperCaseID(name string) string {
+	if name[len(name)-2:] == "Id" {
+		name = name[:len(name)-2] + "ID"
+	}
+	return name
 }
