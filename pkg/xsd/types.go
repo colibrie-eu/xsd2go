@@ -2,8 +2,6 @@ package xsd
 
 import (
 	"encoding/xml"
-
-	"github.com/iancoleman/strcase"
 )
 
 type Type interface {
@@ -85,7 +83,7 @@ func (ct *ComplexType) Elements() []Element {
 }
 
 func (ct *ComplexType) GoName() string {
-	return strcase.ToCamel(ct.Name)
+	return ct.Name
 }
 
 func (ct *ComplexType) GoTypeName() string {
@@ -175,7 +173,7 @@ type SimpleType struct {
 }
 
 func (st *SimpleType) GoName() string {
-	return strcase.ToCamel(st.Name)
+	return st.Name
 }
 
 func (st *SimpleType) GoTypeName() string {

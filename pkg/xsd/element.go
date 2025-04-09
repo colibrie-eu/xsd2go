@@ -49,7 +49,7 @@ func (e *Element) GoFieldName() string {
 		name += "Elm"
 	}
 	name = upperCaseID(name)
-	return strcase.ToCamel(name)
+	return name
 }
 
 func (e *Element) GoName() string {
