@@ -109,6 +109,7 @@ func (e *Element) XmlName() string {
 	if name == "" {
 		return e.refElm.XmlName()
 	}
+	name = e.prefixNamespace(name)
 	return name
 }
 
@@ -167,6 +168,17 @@ func (e *Element) prefixNameWithParent(parentElement *Element) {
 	if parentElement != nil {
 		e.nameOverride = fmt.Sprintf("%s-%s", parentElement.GoName(), e.GoName())
 	}
+}
+
+func (e *Element) prefixNamespace(name string) string {
+	if e.Type == "" {
+		return name
+	}
+	ns := string(e.Type[:2])
+	if ns == "ct" {
+		name = ns + ":" + name
+	}
+	return name
 }
 
 func upperCaseID(name string) string {
