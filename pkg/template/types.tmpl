@@ -5,6 +5,8 @@ import (
     {{- range .GoImportsNeeded}}
         "{{ . }}"
     {{- end }}
+
+    ct "github.com/colibrie-eu/ebutilities/models/customerprocesses/common/types/01p20"
 )
 
 {{range .ExportableElements }}

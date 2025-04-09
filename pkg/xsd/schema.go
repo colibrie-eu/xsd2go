@@ -254,9 +254,6 @@ func (sch *Schema) GoImportsNeeded() []string {
 	if sch.encodingXmlImportNeeded() {
 		imports = append(imports, "encoding/xml")
 	}
-	for _, importedMod := range sch.importedModules {
-		imports = append(imports, fmt.Sprintf("%s/%s", sch.ModulesPath, importedMod.GoPackageName()))
-	}
 	sort.Strings(imports)
 	return imports
 }
