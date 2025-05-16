@@ -125,6 +125,16 @@ func (e *Element) JsonName() string {
 	return firstToLower(e.Name)
 }
 
+func (e *Element) DBName() string {
+	if e.XmlNameOverride != "" {
+		return camelToSnake(e.XmlNameOverride)
+	}
+	if e.Name == "" {
+		return camelToSnake(e.refElm.XmlName())
+	}
+	return camelToSnake(e.Name)
+}
+
 func (e *Element) ContainsText() bool {
 	return e.typ != nil && e.typ.ContainsText()
 }
@@ -191,6 +201,30 @@ func (e *Element) prefixNamespace(name string) string {
 		name = ns + ":" + name
 	}
 	return name
+}
+
+func camelToSnake(s string) string {
+	var result strings.Builder
+	var prev rune
+
+	s = firstToLower(s)
+
+	for i, r := range s {
+		if i > 0 {
+			if unicode.IsUpper(r) && unicode.IsLower(prev) {
+				result.WriteRune('_')
+			} else if unicode.IsUpper(r) && unicode.IsUpper(prev) && i+1 < len([]rune(s)) {
+				next := []rune(s)[i+1]
+				if unicode.IsLower(next) {
+					result.WriteRune('_')
+				}
+			}
+		}
+		result.WriteRune(unicode.ToLower(r))
+		prev = r
+	}
+
+	return result.String()
 }
 
 func firstToLower(s string) string {

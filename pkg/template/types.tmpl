@@ -17,11 +17,11 @@ import (
 
     XMLName xml.Name `json:"-" xml:"{{.Name}}"`
     {{ range .Attributes }}
-        {{ .GoName }} {{.GoForeignModule}}{{.GoType}} `json:"{{.JsonName}},omitempty" xml:"{{.XmlName}},{{.Modifiers}}"`
+        {{ .GoName }} {{.GoForeignModule}}{{.GoType}} `db:"{{.DBName}}" json:"{{.JsonName}},omitempty" xml:"{{.XmlName}},{{.Modifiers}}"`
     {{end }}
 
     {{ range .Elements }}
-      {{ .GoFieldName}} {{.GoMemLayout}}{{.GoForeignModule}}{{ .GoTypeName }} `json:"{{.JsonName}},omitempty" xml:"{{.XmlName}}"`
+      {{ .GoFieldName}} {{.GoMemLayout}}{{.GoForeignModule}}{{ .GoTypeName }} `db:"{{.DBName}}" json:"{{.JsonName}},omitempty" xml:"{{.XmlName}}"`
     {{ end }}
 
     {{- if .ContainsText }}
@@ -39,11 +39,11 @@ import (
     XMLName xml.Name `json:"-"`
   {{- end}}
   {{ range .Attributes }}
-      {{ .GoName }} {{.GoForeignModule}}{{.GoType}} `json:"{{.JsonName}},omitempty" xml:"{{.XmlName}},{{.Modifiers}}"`
+      {{ .GoName }} {{.GoForeignModule}}{{.GoType}} `db:"{{.DBName}}" json:"{{.JsonName}},omitempty" xml:"{{.XmlName}},{{.Modifiers}}"`
   {{end }}
 
   {{ range .Elements }}
-    {{ .GoFieldName}} {{.GoMemLayout}}{{.GoForeignModule}}{{ .GoTypeName }} `json:"{{.JsonName}},omitempty" xml:"{{.XmlName}}"`
+    {{ .GoFieldName}} {{.GoMemLayout}}{{.GoForeignModule}}{{ .GoTypeName }} `db:"{{.DBName}}" json:"{{.JsonName}},omitempty" xml:"{{.XmlName}}"`
   {{end}}
 
   {{- if .ContainsText }}

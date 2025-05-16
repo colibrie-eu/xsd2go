@@ -85,6 +85,10 @@ func (a *Attribute) JsonName() string {
 	return firstToLower(a.XmlName())
 }
 
+func (a *Attribute) DBName() string {
+	return camelToSnake(a.JsonName())
+}
+
 func (a *Attribute) optional() bool {
 	return a.Use == "optional"
 }
